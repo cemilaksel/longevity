@@ -11,7 +11,14 @@ import {
 } from 'lucide-react';
 import { Step } from './types';
 
-export const STEPS: Step[] = [
+interface DynamicDates {
+  bugunDetay: string;
+  bugun: string;
+  ayAraligi: string;
+  bugunUzun: string;
+}
+
+export const getSteps = (dates: DynamicDates): Step[] => [
   {
     id: 1,
     label: "Kayıt",
@@ -38,7 +45,7 @@ export const STEPS: Step[] = [
       {
         id: "step2-p1",
         title: "Hedef GPT: Longevity Guide",
-        content: `📅 Günlük Aktivite & Beslenme Tablosu – 11.04.2026 (Cumartesi)
+        content: `📅 Günlük Aktivite & Beslenme Tablosu – ${dates.bugunDetay}
 
 🎯 Amaç: Yağ yakımı • IF uyumu • Düşük insülin • Kas korunumu • Ödem azaltma • Enerji yönetimi
 
@@ -137,7 +144,7 @@ ___:___ - (ne yediyseniz yazın)`
       {
         id: "step5-p1",
         title: "Prompt 1 - Günlük Plan",
-        content: "Bugün (___/___/2026) IF ve longevity için ne yapayım?"
+        content: `Bugün (${dates.bugun}) IF ve longevity için ne yapayım?`
       },
       {
         id: "step5-p2",
@@ -213,12 +220,12 @@ IF için analiz eder misin?`
 - Başlangıç kilosu: {XX,X} kg
 - Hedef: Haftalık 0.5 kg kayıp
 - Süre: 24 hafta (168 gün)
-- Başlangıç tarihi: XX Nisan 2026
+- Başlangıç tarihi: ${dates.bugunUzun}
 
 📉 İKİ ÇİZGİ OLACAK:
 1. Planlanan Kilo (Mavi çizgi): XX kg'dan başlayıp her hafta 0.5 kg düşen düz çizgi
 2. Gerçekleşen Kilo (Kırmızı çizgi): Günlük tartı değerleri, noktalarla
-   - XX Nisan 2026: XX.X kg
+   - ${dates.bugunUzun}: XX.X kg
    - Her noktanın yanında değeri yazsın (örn: XX.X kg)
 
 📅 EK ÖZELLİKLER:
@@ -228,7 +235,7 @@ IF için analiz eder misin?`
 - Başlık: "24 Haftalık Kilo Takibi - Güncel Gerçekleşen Tartılar"
 - Türkçe etiketler
 
-Bugün XX.XX.2026 itibariyle kilo takibine başladık.`
+Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
       },
       {
         id: "step7-p2",
@@ -242,12 +249,12 @@ Bugün XX.XX.2026 itibariyle kilo takibine başladık.`
 - Başlangıç kilosu: 99,9 kg
 - Hedef: Haftalık 0.5 kg kayıp
 - Süre: 24 hafta (168 gün)
-- Başlangıç tarihi: 11 Nisan 2026
+- Başlangıç tarihi: ${dates.bugunUzun}
 
 📉 İKİ ÇİZGİ OLACAK:
 1. Planlanan Kilo (Mavi çizgi): 100 kg'dan başlayıp her hafta 0.5 kg düşen düz çizgi
 2. Gerçekleşen Kilo (Kırmızı çizgi): Günlük tartı değerleri, noktalarla
-   - 11 Nisan 2026: 99.9 kg
+   - ${dates.bugunUzun}: 99.9 kg
    - Her noktanın yanında değeri yazsın (örn: 99.9 kg)
 
 📅 EK ÖZELLİKLER:
@@ -257,7 +264,7 @@ Bugün XX.XX.2026 itibariyle kilo takibine başladık.`
 - Başlık: "24 Haftalık Kilo Takibi - Güncel Gerçekleşen Tartılar"
 - Türkçe etiketler
 
-Bugün 11.04.2026 itibariyle kilo takibine başladık.`
+Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
       }
     ]
   },
@@ -274,8 +281,8 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
       {
         id: "step8-p1",
         title: "Prompt 1 - Kilo Verileri",
-        example: "Örnek: '01.04.2026 – 30.04.2026 Tarih Günlük Değişim bilgilerini yazar mısın?'",
-        content: `GG.AA.YYYY – GG.AA.YYYY Tarih Günlük Değişim bilgilerini yazar mısın?`
+        example: `Örnek: '${dates.ayAraligi} Tarih Günlük Değişim bilgilerini yazar mısın?'`,
+        content: `${dates.ayAraligi} Tarih Günlük Değişim bilgilerini yazar mısın?`
       },
       {
         id: "step8-p2",
@@ -285,12 +292,12 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
       {
         id: "step8-p3",
         title: "Prompt 3 - Protein Tablosu",
-        content: `GG.AA.YYYY – GG.AA.YYYY Tarih Bazlı Öğün & Protein Tablosu burada tablo olarak yazar mısın?`
+        content: `${dates.ayAraligi} Tarih Bazlı Öğün & Protein Tablosu burada tablo olarak yazar mısın?`
       },
       {
         id: "step8-p4",
         title: "Prompt 4 - Uyku Tablosu",
-        content: `GG.AA.YYYY – GG.AA.YYYY Tüm tarihleri, Tarih, öğün saatleri, uyku uyuma saatleri tablo olarak burada yazar mısın?`
+        content: `${dates.ayAraligi} Tüm tarihleri, Tarih, öğün saatleri, uyku uyuma saatleri tablo olarak burada yazar mısın?`
       },
       {
         id: "step8-p5",
@@ -300,3 +307,4 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
     ]
   }
 ];
+

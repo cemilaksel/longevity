@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 // Model & Types
-import { STEPS } from './constants';
+import { getSteps } from './constants';
 
 // Controller (Logic)
 import { useAppLogic } from './hooks/useAppLogic';
@@ -18,6 +18,7 @@ import { TabNavigation } from './components/TabNavigation';
 import { ProgressBar } from './components/ProgressBar';
 import { StepContent } from './components/StepContent';
 import { Footer } from './components/Footer';
+import { DatePicker } from './components/DatePicker';
 
 export default function App() {
   const { 
@@ -26,24 +27,33 @@ export default function App() {
     copiedId, 
     copyToClipboard, 
     nextStep, 
-    prevStep 
+    prevStep,
+    baseDate,
+    setBaseDate,
+    dynamicDates
   } = useAppLogic();
 
-  const currentStep = STEPS.find(s => s.id === activeTab)!;
+  const steps = useMemo(() => getSteps(dynamicDates), [dynamicDates]);
+  const currentStep = steps.find(s => s.id === activeTab)!;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-dark to-teal-medium pb-12">
       <Header />
 
+      <DatePicker 
+        currentDate={baseDate} 
+        onDateChange={setBaseDate} 
+      />
+
       <TabNavigation 
-        steps={STEPS} 
+        steps={steps} 
         activeTab={activeTab} 
         onTabChange={setActiveTab} 
       />
 
       <ProgressBar 
         activeTab={activeTab} 
-        totalSteps={STEPS.length} 
+        totalSteps={steps.length} 
       />
 
       <main className="max-w-3xl mx-auto px-4">
@@ -79,9 +89,9 @@ export default function App() {
           </button>
           <button
             onClick={nextStep}
-            disabled={activeTab === STEPS.length}
+            disabled={activeTab === steps.length}
             className={`px-6 py-3 rounded-2xl font-bold transition-all min-h-[44px] ${
-              activeTab === STEPS.length 
+              activeTab === steps.length 
                 ? 'bg-white/5 text-white/20 cursor-not-allowed' 
                 : 'bg-gold text-teal-dark hover:scale-105 shadow-lg'
             }`}

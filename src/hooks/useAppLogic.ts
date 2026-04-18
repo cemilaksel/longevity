@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { formatTurkishDate, formatTurkishLongMonth } from '../lib/dateUtils';
 
 export function useAppLogic() {
   const [activeTab, setActiveTab] = useState(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [baseDate, setBaseDate] = useState(new Date());
+
+  const dynamicDates = useMemo(() => {
+    const formatted = formatTurkishDate(baseDate);
+    const bugunUzun = formatTurkishLongMonth(baseDate);
+    return { ...formatted, bugunUzun };
+  }, [baseDate]);
 
   const copyToClipboard = async (text: string, id: string) => {
     try {
@@ -23,6 +31,9 @@ export function useAppLogic() {
     copiedId,
     copyToClipboard,
     nextStep,
-    prevStep
+    prevStep,
+    baseDate,
+    setBaseDate,
+    dynamicDates
   };
 }
