@@ -62,24 +62,7 @@ Burada tablo olarak yazar mısın?
     label: "Bilgi Gir",
     icon: <BookOpen size={18} />,
     title: "📋 Kendi Bilgilerinizi Girin",
-    prompts: [
-      {
-        id: "step3-p1",
-        title: "Hedef GPT: Longevity Guide",
-        note: "Boşlukları kendi bilgilerinizle doldurun",
-        content: `Bugünkü bilgilerim:
-
-Dün akşam saat _____ de yattım
-Bu sabah saat _____ de kalktım
-
-Yediklerim:
-___:___ - (ne yediyseniz yazın)
-___:___ - (ne yediyseniz yazın)
-___:___ - (ne yediyseniz yazın)
-___:___ - (ne yediyseniz yazın)
-___:___ - (ne yediyseniz yazın)`
-      }
-    ]
+    isInteractive: true
   },
   {
     id: 4,

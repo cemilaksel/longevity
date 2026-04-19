@@ -24,4 +24,5 @@ export interface Step {
   prompts?: PromptItem[];
   infoBox?: InfoBox;
   extraContent?: React.ReactNode;
+  isInteractive?: boolean;
 }

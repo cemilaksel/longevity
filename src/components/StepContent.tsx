@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Step } from '../types';
 import { PromptCard } from './PromptCard';
+import { Step3Form } from './Step3Form';
 
 interface StepContentProps {
   step: Step;
@@ -15,35 +16,46 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
       {step.title}
     </h2>
 
-    {/* Info Box */}
-    {step.infoBox && (
-      <div className={`mb-6 p-4 rounded-2xl text-sm leading-relaxed ${
-        step.infoBox.type === 'green' 
-          ? 'bg-green-50 text-green-800 border border-green-100' 
-          : 'bg-amber-50 text-amber-800 border border-amber-100'
-      }`}>
-        <pre className="whitespace-pre-wrap font-sans">{step.infoBox.content}</pre>
-      </div>
-    )}
+    {/* Interactive Form for Step 3 */}
+    {step.isInteractive && step.id === 3 ? (
+      <Step3Form 
+        onCopyAll={(text) => onCopy(text, 'all')} 
+        onCopyCard={onCopy} 
+        copiedId={copiedId} 
+      />
+    ) : (
+      <>
+        {/* Info Box */}
+        {step.infoBox && (
+          <div className={`mb-6 p-4 rounded-2xl text-sm leading-relaxed ${
+            step.infoBox.type === 'green' 
+              ? 'bg-green-50 text-green-800 border border-green-100' 
+              : 'bg-amber-50 text-amber-800 border border-amber-100'
+          }`}>
+            <pre className="whitespace-pre-wrap font-sans">{step.infoBox.content}</pre>
+          </div>
+        )}
 
-    {/* Extra Content (Lists, Tables, etc.) */}
-    {step.extraContent && (
-      <div className="mb-8">
-        {step.extraContent}
-      </div>
-    )}
+        {/* Extra Content (Lists, Tables, etc.) */}
+        {step.extraContent && (
+          <div className="mb-8">
+            {step.extraContent}
+          </div>
+        )}
 
-    {/* Prompts */}
-    <div className="space-y-8">
-      {step.prompts?.map((prompt) => (
-        <PromptCard 
-          key={prompt.id} 
-          prompt={prompt} 
-          copiedId={copiedId} 
-          onCopy={onCopy} 
-        />
-      ))}
-    </div>
+        {/* Prompts */}
+        <div className="space-y-8">
+          {step.prompts?.map((prompt) => (
+            <PromptCard 
+              key={prompt.id} 
+              prompt={prompt} 
+              copiedId={copiedId} 
+              onCopy={onCopy} 
+            />
+          ))}
+        </div>
+      </>
+    )}
 
     {/* Link Button */}
     {step.link && (
