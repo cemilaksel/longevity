@@ -217,7 +217,7 @@ IF için analiz eder misin?`
       {
         id: "step7-p1",
         title: "📝 PROMPT 1: Şablon (boşluklu)",
-        content: `Benim için burada bir kilo takip grafiği oluştur.
+        content: `Benim için [AKTIF_KISI] kilo takibi grafiği oluştur.
 
 📊 GRAFİK ÖZELLİKLERİ:
 - Çizgi grafik (Line Chart) olsun
@@ -246,7 +246,7 @@ Bugün [BUGUN] itibariyle kilo takibine başladık.`
       {
         id: "step7-p2",
         title: "📝 PROMPT 2: Örnek (dolu)",
-        content: `Benim için burada bir kilo takip grafiği oluştur.
+        content: `Benim için [AKTIF_KISI] kilo takibi grafiği oluştur.
 
 📊 GRAFİK ÖZELLİKLERİ:
 - Çizgi grafik (Line Chart) olsun

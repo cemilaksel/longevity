@@ -4,6 +4,9 @@ import { Step } from '../types';
 import { PromptCard } from './PromptCard';
 import { Step3Form } from './Step3Form';
 import { GPTButtons } from './GPTButtons';
+import { PersonSelector } from './PersonSelector';
+import { PersonGPTButtons } from './PersonGPTButtons';
+import { usePersonStorage } from '../hooks/usePersonStorage';
 
 interface StepContentProps {
   step: Step;
@@ -12,6 +15,14 @@ interface StepContentProps {
 }
 
 export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy }) => {
+  const { 
+    persons, 
+    activePerson, 
+    switchPerson, 
+    addPerson, 
+    deletePerson 
+  } = usePersonStorage();
+
   const gptUrl = step.gptType === 'msproject' 
     ? 'https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro'
     : 'https://chatgpt.com/g/g-GKsuaDZUU-longevity-guide';
@@ -25,12 +36,28 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
       </h2>
 
       {/* GPT Quick Buttons */}
-      {step.gptType && (
+      {step.gptType && step.id !== 7 && (
         <GPTButtons 
           gptType={step.gptType} 
           title={gptTitle}
           newChatUrl={gptUrl}
         />
+      )}
+
+      {/* Special Multi-Person UI for Step 7 */}
+      {step.id === 7 && (
+        <>
+          <PersonSelector 
+            persons={persons}
+            activePerson={activePerson}
+            onSwitch={switchPerson}
+            onAdd={addPerson}
+            onDelete={deletePerson}
+          />
+          <PersonGPTButtons 
+            newChatUrl={gptUrl}
+          />
+        </>
       )}
 
       {/* Interactive Form for Step 3 */}
@@ -68,6 +95,7 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
               prompt={prompt} 
               copiedId={copiedId} 
               onCopy={onCopy} 
+              activePersonName={activePerson.name}
             />
           ))}
         </div>
