@@ -65,8 +65,9 @@ export const GPTButtons: React.FC<GPTButtonsProps> = ({ gptType, title, newChatU
           <div className="mb-4">
             <p className="font-bold text-gray-800 mb-2 text-sm">💡 Nasıl kaydedilir?</p>
             <ol className="text-xs text-gray-700 space-y-1 list-decimal list-inside leading-relaxed">
-              <li>"🆕 Yeni Sohbet Başlat" ile ChatGPT'yi açın</li>
-              <li>Sohbeti başlatıp adres çubuğundaki URL'yi kopyalayın</li>
+              <li>"🆕 Yeni Sohbet Başlat" ile {gptType === 'msproject' ? 'MS Project Pro\'yu' : 'ChatGPT\'yi'} açın</li>
+              <li>{gptType === 'msproject' ? 'Kilo grafiği promptunu gönderin' : 'Sohbeti başlatıp adres çubuğundaki URL\'yi kopyalayın'}</li>
+              <li>Tarayıcı adres çubuğundaki URL'yi kopyalayın</li>
               <li>Aşağıya yapıştırıp "Kaydet" butonuna tıklayın</li>
             </ol>
           </div>

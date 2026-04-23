@@ -211,14 +211,12 @@ IF için analiz eder misin?`
     id: 7,
     label: "Grafik",
     icon: <BarChart3 size={18} />,
-    title: "📊 Kilo Takip Grafiği (MS Project Pro)",
+    title: "📊 Kilo Takip Grafiği",
     gptType: "msproject",
-    link: "https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro",
-    linkText: "MS Project Pro'ya Git",
     prompts: [
       {
         id: "step7-p1",
-        title: "Prompt 1 - Şablon",
+        title: "📝 PROMPT 1: Şablon (boşluklu)",
         content: `Benim için burada bir kilo takip grafiği oluştur.
 
 📊 GRAFİK ÖZELLİKLERİ:
@@ -228,12 +226,12 @@ IF için analiz eder misin?`
 - Başlangıç kilosu: {XX,X} kg
 - Hedef: Haftalık 0.5 kg kayıp
 - Süre: 24 hafta (168 gün)
-- Başlangıç tarihi: ${dates.bugunUzun}
+- Başlangıç tarihi: XX Nisan 2026
 
 📉 İKİ ÇİZGİ OLACAK:
 1. Planlanan Kilo (Mavi çizgi): XX kg'dan başlayıp her hafta 0.5 kg düşen düz çizgi
 2. Gerçekleşen Kilo (Kırmızı çizgi): Günlük tartı değerleri, noktalarla
-   - ${dates.bugunUzun}: XX.X kg
+   - XX Nisan 2026: XX.X kg
    - Her noktanın yanında değeri yazsın (örn: XX.X kg)
 
 📅 EK ÖZELLİKLER:
@@ -243,11 +241,11 @@ IF için analiz eder misin?`
 - Başlık: "24 Haftalık Kilo Takibi - Güncel Gerçekleşen Tartılar"
 - Türkçe etiketler
 
-Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
+Bugün [BUGUN] itibariyle kilo takibine başladık.`
       },
       {
         id: "step7-p2",
-        title: "Prompt 2 - Örnek (dolu hali)",
+        title: "📝 PROMPT 2: Örnek (dolu)",
         content: `Benim için burada bir kilo takip grafiği oluştur.
 
 📊 GRAFİK ÖZELLİKLERİ:
@@ -257,12 +255,12 @@ Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
 - Başlangıç kilosu: 99,9 kg
 - Hedef: Haftalık 0.5 kg kayıp
 - Süre: 24 hafta (168 gün)
-- Başlangıç tarihi: ${dates.bugunUzun}
+- Başlangıç tarihi: 11 Nisan 2026
 
 📉 İKİ ÇİZGİ OLACAK:
 1. Planlanan Kilo (Mavi çizgi): 100 kg'dan başlayıp her hafta 0.5 kg düşen düz çizgi
 2. Gerçekleşen Kilo (Kırmızı çizgi): Günlük tartı değerleri, noktalarla
-   - ${dates.bugunUzun}: 99.9 kg
+   - 11 Nisan 2026: 99.9 kg
    - Her noktanın yanında değeri yazsın (örn: 99.9 kg)
 
 📅 EK ÖZELLİKLER:
@@ -272,7 +270,7 @@ Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
 - Başlık: "24 Haftalık Kilo Takibi - Güncel Gerçekleşen Tartılar"
 - Türkçe etiketler
 
-Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
+Bugün 11.04.2026 itibariyle kilo takibine başladık.`
       }
     ]
   },
