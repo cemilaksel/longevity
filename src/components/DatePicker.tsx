@@ -17,14 +17,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({ currentDate, onDateChang
   };
 
   return (
-    <div className="flex items-center justify-center space-x-3 mb-6 bg-white/5 p-3 rounded-2xl border border-white/5 backdrop-blur-sm max-w-xs mx-auto">
-      <CalendarIcon size={18} className="text-gold" />
+    <div className="flex items-center justify-center space-x-3 bg-white/5 px-4 py-2 rounded-xl border border-white/10 backdrop-blur-sm w-full md:w-auto">
+      <CalendarIcon size={16} className="text-gold" />
       <div className="relative">
         <input
           type="date"
           value={dateString}
           onChange={handleChange}
-          className="bg-transparent text-white text-sm font-bold focus:outline-none cursor-pointer [color-scheme:dark]"
+          className="bg-transparent text-white text-xs md:text-sm font-bold focus:outline-none cursor-pointer [color-scheme:dark]"
         />
       </div>
     </div>

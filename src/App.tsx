@@ -41,7 +41,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-dark to-teal-medium pb-12">
-      <Header />
+      <Header>
+        <DatePicker 
+          currentDate={baseDate} 
+          onDateChange={setBaseDate} 
+        />
+      </Header>
 
       {/* Notification Toast */}
       <AnimatePresence>
@@ -59,11 +64,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <DatePicker 
-        currentDate={baseDate} 
-        onDateChange={setBaseDate} 
-      />
 
       <TabNavigation 
         steps={steps} 
