@@ -54,6 +54,19 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
             />
           ))}
         </div>
+
+        {/* Footer Info Box */}
+        {step.footerInfoBox && (
+          <div className={`mt-8 p-4 rounded-2xl text-sm leading-relaxed ${
+            step.footerInfoBox.type === 'green' 
+              ? 'bg-green-50 text-green-800 border border-green-100' 
+              : step.footerInfoBox.type === 'orange'
+              ? 'bg-orange-50 text-orange-800 border border-orange-100'
+              : 'bg-amber-50 text-amber-800 border border-amber-100'
+          }`}>
+            <pre className="whitespace-pre-wrap font-sans">{step.footerInfoBox.content}</pre>
+          </div>
+        )}
       </>
     )}
 

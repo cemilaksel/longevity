@@ -72,7 +72,23 @@ Burada tablo olarak yazar mısın?
     prompts: [
       {
         id: "step4-p1",
-        title: "Hedef GPT: Longevity Guide",
+        title: "⚡ Kısa Değerlendirme (Özet)",
+        bgColor: "bg-blue-50",
+        content: `Bugünkü tüm yediklerimi ve aktivitelerimi kısaca analiz et.
+
+⏳ IF (Intermittent Fasting) Analizi
+🍭 Glisemik Yük Değerlendirmesi
+🧬 Longevity Uyumluluk Puanı
+🎯 Genel Longevity Skoru (100 üzerinden)
+📉 Kilo Yorumu
+🧠 Günün Özeti
+
+Her başlık için maksimum 2-3 cümle yaz.`
+      },
+      {
+        id: "step4-p2",
+        title: "📊 Detaylı Değerlendirme (Tam Analiz)",
+        bgColor: "bg-green-50",
         content: `Bugünkü tüm yediklerimi ve aktivitelerimi analiz et.
 
 Şu başlıklarda değerlendirme yap:
@@ -108,7 +124,11 @@ Burada tablo olarak yazar mısın?
 - En büyük hatam ne?
 - Yarın için 1 öncelikli hedef`
       }
-    ]
+    ],
+    footerInfoBox: {
+      type: 'orange',
+      content: "💡 İPUCU: Sabah acele ediyorsanız \"Kısa Değerlendirme\", akşam detaylı analiz istiyorsanız \"Uzun Değerlendirme\" kullanın."
+    }
   },
   {
     id: 5,

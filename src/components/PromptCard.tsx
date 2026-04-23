@@ -9,9 +9,9 @@ interface PromptCardProps {
 }
 
 export const PromptCard: React.FC<PromptCardProps> = ({ prompt, copiedId, onCopy }) => (
-  <div className="space-y-3">
+  <div className={`p-6 rounded-3xl border border-gray-100 ${prompt.bgColor || 'bg-gray-50'} relative group overflow-hidden space-y-4`}>
     <div className="flex justify-between items-end">
-      <h3 className="text-sm font-bold text-teal-dark/60 uppercase tracking-wide">
+      <h3 className={`text-xs font-bold uppercase tracking-wider ${prompt.bgColor ? 'text-teal-900/40' : 'text-teal-dark/40'}`}>
         {prompt.title}
       </h3>
       {prompt.note && (

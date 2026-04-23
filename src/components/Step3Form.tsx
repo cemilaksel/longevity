@@ -18,8 +18,16 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
     { time: '', food: '' },
     { time: '', food: '' },
   ]);
-  const [exercise, setExercise] = useState({ time: '', detail: '' });
-  const [work, setWork] = useState({ time: '', detail: '' });
+  const [exercises, setExercises] = useState([
+    { time: '', detail: '' },
+    { time: '', detail: '' },
+    { time: '', detail: '' },
+  ]);
+  const [works, setWorks] = useState([
+    { time: '', detail: '' },
+    { time: '', detail: '' },
+    { time: '', detail: '' },
+  ]);
   const [reading, setReading] = useState({ time: '', detail: '' });
 
   // Formatting functions
@@ -33,20 +41,16 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
 
   const formatWeight = () => weight ? `Bugün tartıldım: ${weight} kg` : "";
 
+  const formatRows = (label: string, rows: { time: string; detail: string }[]) => {
+    const validRows = rows.filter(r => r.time && r.detail);
+    if (validRows.length === 0) return "";
+    return `${label}:\n${validRows.map(r => `${r.time} - ${r.detail}`).join('\n')}`;
+  };
+
   const formatMeals = () => {
-    const validMeals = meals.filter(m => m.time || m.food);
+    const validMeals = meals.filter(m => m.time && m.food);
     if (validMeals.length === 0) return "";
-    return `Yediklerim:\n${validMeals.map(m => `${m.time || '__:__'} - ${m.food || '...'}`).join('\n')}`;
-  };
-
-  const formatExercise = () => {
-    if (!exercise.time && !exercise.detail) return "";
-    return `Egzersiz:\n${exercise.time || '__:__'} - ${exercise.detail || '...'}`;
-  };
-
-  const formatWork = () => {
-    if (!work.time && !work.detail) return "";
-    return `Çalışma:\n${work.time || '__:__'} - ${work.detail || '...'}`;
+    return `Yediklerim:\n${validMeals.map(m => `${m.time} - ${m.food}`).join('\n')}`;
   };
 
   const formatReading = () => {
@@ -60,8 +64,8 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
       formatSleep(),
       formatWeight(),
       formatMeals(),
-      formatExercise(),
-      formatWork(),
+      formatRows("Egzersiz", exercises),
+      formatRows("Çalışma", works),
       formatReading()
     ].filter(p => p !== "");
     
@@ -138,7 +142,7 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
               />
               <input 
                 type="text" 
-                placeholder="Ne yediğiniz..."
+                placeholder={idx === 0 ? "08:30 - 2 yumurta, peynir, ekmek" : (idx === 1 ? "12:00 - Tavuk, salata" : "Ne yediğiniz...")}
                 className="w-2/3 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
                 value={meal.food}
                 onChange={e => {
@@ -157,27 +161,37 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
         title="🏃 Egzersiz" 
         id="exercise" 
         copiedId={copiedId} 
-        onCopy={() => onCopyCard(formatExercise(), "exercise")}
+        onCopy={() => onCopyCard(formatRows("Egzersiz", exercises), "exercise")}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <InputGroup label="Saat:">
-            <input 
-              type="time" 
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" 
-              value={exercise.time}
-              onChange={e => setExercise({...exercise, time: e.target.value})}
-            />
-          </InputGroup>
-          <div className="md:col-span-2 space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase px-1">Egzersiz türü ve süresi:</label>
-            <input 
-              type="text" 
-              placeholder="örn: 30 dk yürüyüş"
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" 
-              value={exercise.detail}
-              onChange={e => setExercise({...exercise, detail: e.target.value})}
-            />
-          </div>
+        <div className="space-y-3">
+          {exercises.map((ex, idx) => (
+            <div key={idx} className="flex space-x-2">
+              <input 
+                type="time" 
+                className="w-1/3 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                value={ex.time}
+                onChange={e => {
+                  const newEx = [...exercises];
+                  newEx[idx].time = e.target.value;
+                  setExercises(newEx);
+                }}
+              />
+              <input 
+                type="text" 
+                placeholder={
+                  idx === 0 ? "08:30 - Leslie 1 mile, 20 dakika" : 
+                  (idx === 1 ? "14:00 - 30 dakika yürüyüş" : "19:00 - Nefes egzersizi, 10 dakika")
+                }
+                className="w-2/3 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                value={ex.detail}
+                onChange={e => {
+                  const newEx = [...exercises];
+                  newEx[idx].detail = e.target.value;
+                  setExercises(newEx);
+                }}
+              />
+            </div>
+          ))}
         </div>
       </Card>
 
@@ -186,27 +200,37 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
         title="💼 Çalışma" 
         id="work" 
         copiedId={copiedId} 
-        onCopy={() => onCopyCard(formatWork(), "work")}
+        onCopy={() => onCopyCard(formatRows("Çalışma", works), "work")}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <InputGroup label="Saat:">
-            <input 
-              type="time" 
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" 
-              value={work.time}
-              onChange={e => setWork({...work, time: e.target.value})}
-            />
-          </InputGroup>
-          <div className="md:col-span-2 space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase px-1">Ne üzerinde çalıştınız:</label>
-            <input 
-              type="text" 
-              placeholder="örn: Excel raporu"
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" 
-              value={work.detail}
-              onChange={e => setWork({...work, detail: e.target.value})}
-            />
-          </div>
+        <div className="space-y-3">
+          {works.map((work, idx) => (
+            <div key={idx} className="flex space-x-2">
+              <input 
+                type="time" 
+                className="w-1/3 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                value={work.time}
+                onChange={e => {
+                  const newWork = [...works];
+                  newWork[idx].time = e.target.value;
+                  setWorks(newWork);
+                }}
+              />
+              <input 
+                type="text" 
+                placeholder={
+                  idx === 0 ? "09:00 - Excel raporu, 2 saat" : 
+                  (idx === 1 ? "13:00 - Toplantı, 1 saat" : "15:00 - E-posta, 30 dakika")
+                }
+                className="w-2/3 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                value={work.detail}
+                onChange={e => {
+                  const newWork = [...works];
+                  newWork[idx].detail = e.target.value;
+                  setWorks(newWork);
+                }}
+              />
+            </div>
+          ))}
         </div>
       </Card>
 
@@ -255,7 +279,7 @@ export const Step3Form: React.FC<Step3FormProps> = ({ onCopyAll, onCopyCard, cop
           ) : (
             <>
               <Clipboard className="w-6 h-6 group-hover:scale-110 transition-transform" />
-              <span className="text-lg">📋 Tümünü Kopyala</span>
+              <span className="text-lg uppercase tracking-wider font-extrabold">📋 Tümünü Kopyala</span>
             </>
           )}
         </button>

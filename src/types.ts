@@ -6,10 +6,11 @@ export interface PromptItem {
   content: string;
   note?: string;
   example?: string;
+  bgColor?: string;
 }
 
 export interface InfoBox {
-  type: 'green' | 'yellow';
+  type: 'green' | 'yellow' | 'orange';
   content: string;
 }
 
@@ -23,6 +24,7 @@ export interface Step {
   linkText?: string;
   prompts?: PromptItem[];
   infoBox?: InfoBox;
+  footerInfoBox?: InfoBox;
   extraContent?: React.ReactNode;
   isInteractive?: boolean;
 }
