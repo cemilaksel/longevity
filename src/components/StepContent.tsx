@@ -3,6 +3,7 @@ import { ExternalLink } from 'lucide-react';
 import { Step } from '../types';
 import { PromptCard } from './PromptCard';
 import { Step3Form } from './Step3Form';
+import { GPTButtons } from './GPTButtons';
 
 interface StepContentProps {
   step: Step;
@@ -10,13 +11,29 @@ interface StepContentProps {
   onCopy: (text: string, id: string) => void;
 }
 
-export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy }) => (
-  <div className="p-6 md:p-8">
-    <h2 className="text-xl md:text-2xl font-bold text-teal-dark mb-6 flex items-center">
-      {step.title}
-    </h2>
+export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy }) => {
+  const gptUrl = step.gptType === 'msproject' 
+    ? 'https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro'
+    : 'https://chatgpt.com/g/g-GKsuaDZUU-longevity-guide';
 
-    {/* Interactive Form for Step 3 */}
+  const gptTitle = step.gptType === 'msproject' ? 'MS Project Pro' : 'Longevity Guide';
+
+  return (
+    <div className="p-6 md:p-8">
+      <h2 className="text-xl md:text-2xl font-bold text-teal-dark mb-6 flex items-center">
+        {step.title}
+      </h2>
+
+      {/* GPT Quick Buttons */}
+      {step.gptType && (
+        <GPTButtons 
+          gptType={step.gptType} 
+          title={gptTitle}
+          newChatUrl={gptUrl}
+        />
+      )}
+
+      {/* Interactive Form for Step 3 */}
     {step.isInteractive && step.id === 3 ? (
       <Step3Form 
         onCopyAll={(text) => onCopy(text, 'all')} 
@@ -84,5 +101,6 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
         </a>
       </div>
     )}
-  </div>
-);
+    </div>
+  );
+};

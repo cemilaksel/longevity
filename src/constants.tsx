@@ -41,6 +41,7 @@ export const getSteps = (dates: DynamicDates): Step[] => [
     label: "Tablo",
     icon: <Calendar size={18} />,
     title: "📝 Günlük Beslenme Tablosu Oluşturma",
+    gptType: "longevity",
     prompts: [
       {
         id: "step2-p1",
@@ -62,6 +63,7 @@ Burada tablo olarak yazar mısın?
     label: "Bilgi Gir",
     icon: <BookOpen size={18} />,
     title: "📋 Kendi Bilgilerinizi Girin",
+    gptType: "longevity",
     isInteractive: true
   },
   {
@@ -69,6 +71,7 @@ Burada tablo olarak yazar mısın?
     label: "Analiz",
     icon: <Moon size={18} />,
     title: "🌙 Gün Kapanışı Analizi (6 Metrik)",
+    gptType: "longevity",
     prompts: [
       {
         id: "step4-p1",
@@ -135,6 +138,7 @@ Her başlık için maksimum 2-3 cümle yaz.`
     label: "IF Sorgu",
     icon: <Search size={18} />,
     title: "🍫 IF Analizi ve Yiyecek Sorguları",
+    gptType: "longevity",
     infoBox: {
       type: 'green',
       content: `🟢 YEME PENCERESİ İÇİNDE (örn: 09:00-17:00 veya 12:00-20:00)
@@ -208,6 +212,7 @@ IF için analiz eder misin?`
     label: "Grafik",
     icon: <BarChart3 size={18} />,
     title: "📊 Kilo Takip Grafiği (MS Project Pro)",
+    gptType: "msproject",
     link: "https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro",
     linkText: "MS Project Pro'ya Git",
     prompts: [
@@ -276,6 +281,7 @@ Bugün ${dates.bugun} itibariyle kilo takibine başladık.`
     label: "Ay Geçişi",
     icon: <RefreshCw size={18} />,
     title: "🔄 Ay Geçişi - Veri Taşıma",
+    gptType: "longevity",
     infoBox: {
       type: 'yellow',
       content: "ChatGPT'nin belleği sınırlıdır. Her ay yeni bir sohbet açıp eski verileri taşımalısınız."

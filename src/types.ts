@@ -22,6 +22,7 @@ export interface Step {
   description?: string;
   link?: string;
   linkText?: string;
+  gptType?: 'longevity' | 'msproject';
   prompts?: PromptItem[];
   infoBox?: InfoBox;
   footerInfoBox?: InfoBox;

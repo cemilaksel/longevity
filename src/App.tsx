@@ -11,6 +11,7 @@ import { getSteps } from './constants';
 
 // Controller (Logic)
 import { useAppLogic } from './hooks/useAppLogic';
+import { useGPTStorage } from './hooks/useGPTStorage';
 
 // View (Components)
 import { Header } from './components/Header';
@@ -33,12 +34,31 @@ export default function App() {
     dynamicDates
   } = useAppLogic();
 
+  const { notification } = useGPTStorage();
+
   const steps = useMemo(() => getSteps(dynamicDates), [dynamicDates]);
   const currentStep = steps.find(s => s.id === activeTab)!;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-dark to-teal-medium pb-12">
       <Header />
+
+      {/* Notification Toast */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold text-sm min-w-[280px] text-center backdrop-blur-md ${
+              notification.type === 'success' ? 'bg-green-500/90' : 
+              notification.type === 'error' ? 'bg-red-500/90' : 'bg-blue-500/90'
+            }`}
+          >
+            {notification.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <DatePicker 
         currentDate={baseDate} 
