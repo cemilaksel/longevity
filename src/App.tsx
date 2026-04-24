@@ -20,6 +20,7 @@ import { ProgressBar } from './components/ProgressBar';
 import { StepContent } from './components/StepContent';
 import { Footer } from './components/Footer';
 import { DatePicker } from './components/DatePicker';
+import { BackupSection } from './components/BackupSection';
 
 export default function App() {
   const { 
@@ -34,7 +35,7 @@ export default function App() {
     dynamicDates
   } = useAppLogic();
 
-  const { notification } = useGPTStorage();
+  const { notification, showNotification } = useGPTStorage();
 
   const steps = useMemo(() => getSteps(dynamicDates), [dynamicDates]);
   const currentStep = steps.find(s => s.id === activeTab)!;
@@ -120,6 +121,8 @@ export default function App() {
           </button>
         </div>
       </main>
+
+      <BackupSection onNotify={showNotification} />
 
       <Footer />
     </div>
