@@ -12,16 +12,17 @@ interface StepContentProps {
   step: Step;
   copiedId: string | null;
   onCopy: (text: string, id: string) => void;
+  personStorage: ReturnType<typeof usePersonStorage>;
 }
 
-export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy }) => {
+export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy, personStorage }) => {
   const { 
     persons, 
     activePerson, 
     switchPerson, 
     addPerson, 
     deletePerson 
-  } = usePersonStorage();
+  } = personStorage;
 
   const gptUrl = step.gptType === 'msproject' 
     ? 'https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro'
@@ -56,6 +57,8 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
           />
           <PersonGPTButtons 
             newChatUrl={gptUrl}
+            activePerson={activePerson}
+            savePersonChatURL={personStorage.savePersonChatURL}
           />
         </>
       )}

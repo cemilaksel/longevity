@@ -18,16 +18,8 @@ export function useGPTStorage() {
   }, []);
 
   const cleanOldChats = useCallback(() => {
-    ['longevity', 'msproject'].forEach(type => {
-      const dateStr = localStorage.getItem(`${type}_chat_date`);
-      if (dateStr) {
-        const days = (new Date().getTime() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24);
-        if (days > 7) {
-          localStorage.removeItem(`${type}_chat_url`);
-          localStorage.removeItem(`${type}_chat_date`);
-        }
-      }
-    });
+    // Otomatik silme devre dışı
+    return;
   }, []);
 
   const loadSessions = useCallback(() => {

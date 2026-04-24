@@ -12,6 +12,7 @@ import { getSteps } from './constants';
 // Controller (Logic)
 import { useAppLogic } from './hooks/useAppLogic';
 import { useGPTStorage } from './hooks/useGPTStorage';
+import { usePersonStorage } from './hooks/usePersonStorage';
 
 // View (Components)
 import { Header } from './components/Header';
@@ -36,6 +37,7 @@ export default function App() {
   } = useAppLogic();
 
   const { notification, showNotification } = useGPTStorage();
+  const personStorage = usePersonStorage();
 
   const steps = useMemo(() => getSteps(dynamicDates), [dynamicDates]);
   const currentStep = steps.find(s => s.id === activeTab)!;
@@ -90,7 +92,8 @@ export default function App() {
             <StepContent 
               step={currentStep} 
               copiedId={copiedId} 
-              onCopy={copyToClipboard} 
+              onCopy={copyToClipboard}
+              personStorage={personStorage}
             />
           </motion.div>
         </AnimatePresence>

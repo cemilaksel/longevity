@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { usePersonStorage } from '../hooks/usePersonStorage';
+import { Person } from '../hooks/usePersonStorage';
 import { formatChatDate } from '../hooks/useGPTStorage';
 
 interface PersonGPTButtonsProps {
   newChatUrl: string;
+  activePerson: Person;
+  savePersonChatURL: (url: string) => boolean;
 }
 
-export const PersonGPTButtons: React.FC<PersonGPTButtonsProps> = ({ newChatUrl }) => {
-  const { activePerson, savePersonChatURL } = usePersonStorage();
+export const PersonGPTButtons: React.FC<PersonGPTButtonsProps> = ({ 
+  newChatUrl, 
+  activePerson, 
+  savePersonChatURL 
+}) => {
   const [showSaveArea, setShowSaveArea] = useState(false);
   const [urlInput, setUrlInput] = useState('');
 
@@ -91,7 +96,7 @@ export const PersonGPTButtons: React.FC<PersonGPTButtonsProps> = ({ newChatUrl }
           </div>
           
           <p className="text-[10px] text-gray-500 mt-2 italic px-1">
-            ℹ️ Kayıt kişiye özel saklanır
+            ℹ️ Kayıtlarınız siz silmediğiniz sürece kalır
           </p>
         </div>
       )}

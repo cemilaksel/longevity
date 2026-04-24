@@ -89,7 +89,7 @@ export const GPTButtons: React.FC<GPTButtonsProps> = ({ gptType, title, newChatU
           </div>
           
           <p className="text-[10px] text-gray-500 mt-2 italic px-1">
-            ℹ️ Kayıt 7 gün sonra otomatik silinir
+            ℹ️ Kayıtlarınız siz silmediğiniz sürece kalır
           </p>
         </div>
       )}

@@ -49,7 +49,14 @@ export function usePersonStorage() {
   };
 
   const addPerson = (name: string) => {
-    const id = name.toLowerCase().trim().replace(/\s+/g, '_');
+    const trMap: { [key: string]: string } = {
+      'ğ': 'g', 'ü': 'u', 'ş': 's', 'ı': 'i', 'ö': 'o', 'ç': 'c',
+      'Ğ': 'g', 'Ü': 'u', 'Ş': 's', 'İ': 'i', 'Ö': 'o', 'Ç': 'c'
+    };
+    const id = name.toLowerCase().trim()
+      .replace(/[ğüşıöçĞÜŞİÖÇ]/g, (c) => trMap[c] || c)
+      .replace(/\s+/g, '_');
+    
     if (state.persons[id]) return false;
 
     const newPersons = { 
