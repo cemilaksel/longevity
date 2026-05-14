@@ -312,6 +312,14 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
         content: `Analiz eder misin?`
       }
     ]
+  },
+  {
+    id: 9,
+    label: "A3 Report",
+    icon: <BarChart3 size={18} />,
+    title: "🅰️3️⃣ A3 Report — Toyota Metoduyla Kişisel Analiz",
+    gptType: "a3",
+    isInteractive: true
   }
 ];
 

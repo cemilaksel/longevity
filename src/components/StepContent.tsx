@@ -6,6 +6,7 @@ import { Step3Form } from './Step3Form';
 import { GPTButtons } from './GPTButtons';
 import { PersonSelector } from './PersonSelector';
 import { PersonGPTButtons } from './PersonGPTButtons';
+import { Step9A3Report } from './Step9A3Report';
 import { usePersonStorage } from '../hooks/usePersonStorage';
 
 interface StepContentProps {
@@ -13,9 +14,10 @@ interface StepContentProps {
   copiedId: string | null;
   onCopy: (text: string, id: string) => void;
   personStorage: ReturnType<typeof usePersonStorage>;
+  baseDate: Date;
 }
 
-export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy, personStorage }) => {
+export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy, personStorage, baseDate }) => {
   const { 
     persons, 
     activePerson, 
@@ -26,9 +28,11 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
 
   const gptUrl = step.gptType === 'msproject' 
     ? 'https://chatgpt.com/g/g-SZqNg3QPk-msproject-pro'
+    : step.gptType === 'a3'
+    ? 'https://chatgpt.com/g/g-GKsuaDZUU-longevity-guide' // Using Longevity Guide for A3 as per common patterns
     : 'https://chatgpt.com/g/g-GKsuaDZUU-longevity-guide';
 
-  const gptTitle = step.gptType === 'msproject' ? 'MS Project Pro' : 'Longevity Guide';
+  const gptTitle = step.gptType === 'msproject' ? 'MS Project Pro' : (step.gptType === 'a3' ? 'A3 Report' : 'Longevity Guide');
 
   return (
     <div className="p-6 md:p-8">
@@ -37,7 +41,7 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
       </h2>
 
       {/* GPT Quick Buttons */}
-      {step.gptType && step.id !== 7 && (
+      {step.gptType && step.id !== 7 && step.id !== 9 && (
         <GPTButtons 
           gptType={step.gptType} 
           title={gptTitle}
@@ -69,6 +73,13 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
         onCopyAll={(text) => onCopy(text, 'all')} 
         onCopyCard={onCopy} 
         copiedId={copiedId} 
+        baseDate={baseDate}
+      />
+    ) : step.isInteractive && step.id === 9 ? (
+      <Step9A3Report 
+        baseDate={baseDate}
+        onCopyPrompt={onCopy}
+        copiedId={copiedId}
       />
     ) : (
       <>

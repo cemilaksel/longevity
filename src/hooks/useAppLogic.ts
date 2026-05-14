@@ -22,7 +22,7 @@ export function useAppLogic() {
     }
   };
 
-  const nextStep = () => setActiveTab(prev => Math.min(8, prev + 1));
+  const nextStep = () => setActiveTab(prev => Math.min(9, prev + 1));
   const prevStep = () => setActiveTab(prev => Math.max(1, prev - 1));
 
   return {

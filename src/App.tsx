@@ -94,6 +94,7 @@ export default function App() {
               copiedId={copiedId} 
               onCopy={copyToClipboard}
               personStorage={personStorage}
+              baseDate={baseDate}
             />
           </motion.div>
         </AnimatePresence>
