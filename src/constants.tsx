@@ -7,7 +7,8 @@ import {
   Search, 
   Leaf, 
   BarChart3, 
-  RefreshCw 
+  RefreshCw,
+  Book 
 } from 'lucide-react';
 import { Step } from './types';
 
@@ -209,13 +210,20 @@ IF için analiz eder misin?`
   },
   {
     id: 7,
+    label: "Günlüğüm",
+    icon: <Book size={18} />,
+    title: "📔 Günlüğüm",
+    isInteractive: true
+  },
+  {
+    id: 8,
     label: "Grafik",
     icon: <BarChart3 size={18} />,
     title: "📊 Kilo Takip Grafiği",
     gptType: "msproject",
     prompts: [
       {
-        id: "step7-p1",
+        id: "step8-p1",
         title: "📝 PROMPT 1: Şablon (boşluklu)",
         content: `Benim için [AKTIF_KISI] kilo takibi grafiği oluştur.
 
@@ -244,7 +252,7 @@ IF için analiz eder misin?`
 Bugün [BUGUN] itibariyle kilo takibine başladık.`
       },
       {
-        id: "step7-p2",
+        id: "step8-p2",
         title: "📝 PROMPT 2: Örnek (dolu)",
         content: `Benim için [AKTIF_KISI] kilo takibi grafiği oluştur.
 
@@ -275,7 +283,7 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
     ]
   },
   {
-    id: 8,
+    id: 9,
     label: "Ay Geçişi",
     icon: <RefreshCw size={18} />,
     title: "🔄 Ay Geçişi - Veri Taşıma",
@@ -286,35 +294,35 @@ Bugün 11.04.2026 itibariyle kilo takibine başladık.`
     },
     prompts: [
       {
-        id: "step8-p1",
+        id: "step9-p1",
         title: "Prompt 1 - Kilo Verileri",
         example: `Örnek: '${dates.ayAraligi} Tarih Günlük Değişim bilgilerini yazar mısın?'`,
         content: `${dates.ayAraligi} Tarih Günlük Değişim bilgilerini yazar mısın?`
       },
       {
-        id: "step8-p2",
+        id: "step9-p2",
         title: "Prompt 2 - Tüm Oturum",
         content: `Tüm oturumu analiz eder misin?`
       },
       {
-        id: "step8-p3",
+        id: "step9-p3",
         title: "Prompt 3 - Protein Tablosu",
         content: `${dates.ayAraligi} Tarih Bazlı Öğün & Protein Tablosu burada tablo olarak yazar mısın?`
       },
       {
-        id: "step8-p4",
+        id: "step9-p4",
         title: "Prompt 4 - Uyku Tablosu",
         content: `${dates.ayAraligi} Tüm tarihleri, Tarih, öğün saatleri, uyku uyuma saatleri tablo olarak burada yazar mısın?`
       },
       {
-        id: "step8-p5",
+        id: "step9-p5",
         title: "Prompt 5 - Yeni Sohbette",
         content: `Analiz eder misin?`
       }
     ]
   },
   {
-    id: 9,
+    id: 10,
     label: "A3 Report",
     icon: <BarChart3 size={18} />,
     title: "🅰️3️⃣ A3 Report — Toyota Metoduyla Kişisel Analiz",

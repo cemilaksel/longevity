@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { formatTurkishDate, formatTurkishLongMonth } from '../lib/dateUtils';
 
 export function useAppLogic() {
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState<number | 'settings'>(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [baseDate, setBaseDate] = useState(new Date());
 
@@ -22,8 +22,8 @@ export function useAppLogic() {
     }
   };
 
-  const nextStep = () => setActiveTab(prev => Math.min(9, prev + 1));
-  const prevStep = () => setActiveTab(prev => Math.max(1, prev - 1));
+  const nextStep = () => setActiveTab(prev => typeof prev === 'number' ? Math.min(10, prev + 1) : 1);
+  const prevStep = () => setActiveTab(prev => typeof prev === 'number' ? Math.max(1, prev - 1) : 1);
 
   return {
     activeTab,

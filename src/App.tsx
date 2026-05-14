@@ -21,7 +21,7 @@ import { ProgressBar } from './components/ProgressBar';
 import { StepContent } from './components/StepContent';
 import { Footer } from './components/Footer';
 import { DatePicker } from './components/DatePicker';
-import { BackupSection } from './components/BackupSection';
+import { SettingsView } from './components/SettingsView';
 
 export default function App() {
   const { 
@@ -40,7 +40,9 @@ export default function App() {
   const personStorage = usePersonStorage();
 
   const steps = useMemo(() => getSteps(dynamicDates), [dynamicDates]);
-  const currentStep = steps.find(s => s.id === activeTab)!;
+  const currentStep = steps.find(s => s.id === activeTab);
+
+  const isSettings = activeTab === 'settings';
 
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-dark to-teal-medium pb-12">
@@ -74,10 +76,12 @@ export default function App() {
         onTabChange={setActiveTab} 
       />
 
-      <ProgressBar 
-        activeTab={activeTab} 
-        totalSteps={steps.length} 
-      />
+      {!isSettings && (
+        <ProgressBar 
+          activeTab={activeTab as number} 
+          totalSteps={steps.length} 
+        />
+      )}
 
       <main className="max-w-3xl mx-auto px-4">
         <AnimatePresence mode="wait">
@@ -89,44 +93,49 @@ export default function App() {
             transition={{ duration: 0.2 }}
             className="bg-white rounded-3xl shadow-2xl overflow-hidden"
           >
-            <StepContent 
-              step={currentStep} 
-              copiedId={copiedId} 
-              onCopy={copyToClipboard}
-              personStorage={personStorage}
-              baseDate={baseDate}
-            />
+            {isSettings ? (
+              <SettingsView onNotify={showNotification} />
+            ) : currentStep ? (
+              <StepContent 
+                step={currentStep} 
+                copiedId={copiedId} 
+                onCopy={copyToClipboard}
+                personStorage={personStorage}
+                baseDate={baseDate}
+                onNotify={showNotification}
+              />
+            ) : null}
           </motion.div>
         </AnimatePresence>
 
         {/* Navigation Buttons */}
-        <div className="mt-6 flex justify-between items-center px-2">
-          <button
-            onClick={prevStep}
-            disabled={activeTab === 1}
-            className={`px-6 py-3 rounded-2xl font-bold transition-all min-h-[44px] ${
-              activeTab === 1 
-                ? 'bg-white/5 text-white/20 cursor-not-allowed' 
-                : 'bg-white/10 text-white hover:bg-white/20'
-            }`}
-          >
-            Geri
-          </button>
-          <button
-            onClick={nextStep}
-            disabled={activeTab === steps.length}
-            className={`px-6 py-3 rounded-2xl font-bold transition-all min-h-[44px] ${
-              activeTab === steps.length 
-                ? 'bg-white/5 text-white/20 cursor-not-allowed' 
-                : 'bg-gold text-teal-dark hover:scale-105 shadow-lg'
-            }`}
-          >
-            İleri
-          </button>
-        </div>
+        {!isSettings && (
+          <div className="mt-6 flex justify-between items-center px-2">
+            <button
+              onClick={prevStep}
+              disabled={activeTab === 1}
+              className={`px-6 py-3 rounded-2xl font-bold transition-all min-h-[44px] ${
+                activeTab === 1 
+                  ? 'bg-white/5 text-white/20 cursor-not-allowed' 
+                  : 'bg-white/10 text-white hover:bg-white/20'
+              }`}
+            >
+              Geri
+            </button>
+            <button
+              onClick={nextStep}
+              disabled={activeTab === steps.length}
+              className={`px-6 py-3 rounded-2xl font-bold transition-all min-h-[44px] ${
+                activeTab === steps.length 
+                  ? 'bg-white/5 text-white/20 cursor-not-allowed' 
+                  : 'bg-gold text-teal-dark hover:scale-105 shadow-lg'
+              }`}
+            >
+              İleri
+            </button>
+          </div>
+        )}
       </main>
-
-      <BackupSection onNotify={showNotification} />
 
       <Footer />
     </div>

@@ -49,3 +49,17 @@ export interface A3FormState {
   background: string;
   target: string;
 }
+
+export interface JournalEntry {
+  happy: string[];
+  wishes: string[];
+  routineNote: string;
+}
+
+export interface StorageSummary {
+  hasLongevity: boolean;
+  longevityDate: string | null;
+  personsCount: number;
+  totalSizeKB: string;
+  lastBackupDate: string | null;
+}

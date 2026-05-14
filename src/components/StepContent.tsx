@@ -7,6 +7,7 @@ import { GPTButtons } from './GPTButtons';
 import { PersonSelector } from './PersonSelector';
 import { PersonGPTButtons } from './PersonGPTButtons';
 import { Step9A3Report } from './Step9A3Report';
+import { JournalView } from './JournalView';
 import { usePersonStorage } from '../hooks/usePersonStorage';
 
 interface StepContentProps {
@@ -15,9 +16,10 @@ interface StepContentProps {
   onCopy: (text: string, id: string) => void;
   personStorage: ReturnType<typeof usePersonStorage>;
   baseDate: Date;
+  onNotify: (msg: string, type: 'success' | 'error' | 'info') => void;
 }
 
-export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy, personStorage, baseDate }) => {
+export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy, personStorage, baseDate, onNotify }) => {
   const { 
     persons, 
     activePerson, 
@@ -41,7 +43,7 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
       </h2>
 
       {/* GPT Quick Buttons */}
-      {step.gptType && step.id !== 7 && step.id !== 9 && (
+      {step.gptType && step.id !== 8 && step.id !== 10 && (
         <GPTButtons 
           gptType={step.gptType} 
           title={gptTitle}
@@ -49,8 +51,8 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
         />
       )}
 
-      {/* Special Multi-Person UI for Step 7 */}
-      {step.id === 7 && (
+      {/* Special Multi-Person UI for Step 8 (shifted from 7) */}
+      {step.id === 8 && (
         <>
           <PersonSelector 
             persons={persons}
@@ -67,7 +69,7 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
         </>
       )}
 
-      {/* Interactive Form for Step 3 */}
+      {/* Interactive Content */}
     {step.isInteractive && step.id === 3 ? (
       <Step3Form 
         onCopyAll={(text) => onCopy(text, 'all')} 
@@ -75,7 +77,13 @@ export const StepContent: React.FC<StepContentProps> = ({ step, copiedId, onCopy
         copiedId={copiedId} 
         baseDate={baseDate}
       />
-    ) : step.isInteractive && step.id === 9 ? (
+    ) : step.isInteractive && step.id === 7 ? (
+      <JournalView 
+        onCopy={onCopy}
+        onNotify={onNotify}
+        copiedId={copiedId}
+      />
+    ) : step.isInteractive && step.id === 10 ? (
       <Step9A3Report 
         baseDate={baseDate}
         onCopyPrompt={onCopy}

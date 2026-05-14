@@ -82,6 +82,23 @@ export function usePersonStorage() {
     return true;
   };
 
+  const renamePerson = (id: string, newName: string) => {
+    if (!state.persons[id]) return false;
+    
+    const updatedPerson = {
+      ...state.persons[id],
+      name: newName
+    };
+
+    const newPersons = {
+      ...state.persons,
+      [id]: updatedPerson
+    };
+
+    saveToStorage({ ...state, persons: newPersons });
+    return true;
+  };
+
   const savePersonChatURL = (url: string) => {
     const activePerson = state.persons[state.activePersonId];
     if (!activePerson) return false;
@@ -109,6 +126,7 @@ export function usePersonStorage() {
     switchPerson,
     addPerson,
     deletePerson,
+    renamePerson,
     savePersonChatURL
   };
 }

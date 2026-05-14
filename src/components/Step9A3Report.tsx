@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Clipboard, Check, Info, FileText, BarChart3, ChevronDown, ChevronUp } from 'lucide-react';
 import { useA3Storage } from '../hooks/useA3Storage';
 import { useGPTStorage } from '../hooks/useGPTStorage';
+import { useJournal } from '../hooks/useJournal';
 import { GPTButtons } from './GPTButtons';
 
 interface Step9A3ReportProps {
@@ -12,6 +13,7 @@ interface Step9A3ReportProps {
 
 export const Step9A3Report: React.FC<Step9A3ReportProps> = ({ baseDate, onCopyPrompt, copiedId }) => {
   const { a3Form, setA3Form, getRecordsForPeriod } = useA3Storage();
+  const { getEntriesForPeriod } = useJournal();
   const { showNotification } = useGPTStorage();
   const [generatedPrompt, setGeneratedPrompt] = useState<string | null>(null);
   const [showBlankTemplate, setShowBlankTemplate] = useState(false);
@@ -20,11 +22,11 @@ export const Step9A3Report: React.FC<Step9A3ReportProps> = ({ baseDate, onCopyPr
   const gptTitle = 'Longevity Guide';
 
   const generatePrompt = () => {
-    // ... logic remains same ...
     const records = getRecordsForPeriod(a3Form.period, baseDate);
+    const journalData = getEntriesForPeriod(a3Form.period, baseDate);
     
     let statsSection = "";
-    if (records.length === 0) {
+    if (records.length === 0 && journalData.length === 0) {
       statsSection = "Henüz bu döneme ait kayıt yok, lütfen verilerimi soracağın sırada ben gireceğim";
     } else {
       const totalSleep = records.reduce((acc, r) => {
@@ -36,7 +38,7 @@ export const Step9A3Report: React.FC<Step9A3ReportProps> = ({ baseDate, onCopyPr
         }
         return acc;
       }, 0);
-      const avgSleep = (totalSleep / records.length).toFixed(1);
+      const avgSleep = records.length > 0 ? (totalSleep / records.length).toFixed(1) : "0";
 
       const moodTrend = records.map(r => r.mood?.score || 0).filter(s => s > 0);
       const avgMood = moodTrend.length > 0 ? (moodTrend.reduce((a, b) => a + b, 0) / moodTrend.length).toFixed(1) : "0";
@@ -51,11 +53,20 @@ export const Step9A3Report: React.FC<Step9A3ReportProps> = ({ baseDate, onCopyPr
         .map(([name, hours]) => `${name}: ${hours} sa`)
         .join(', ');
 
+      const journalSummary = journalData.map(j => {
+        const happy = j.entry.happy.filter(h => h.trim()).join(', ');
+        const wishes = j.entry.wishes.filter(w => w.trim()).join(', ');
+        return `[${j.date}] Mutlu: ${happy} | Dilek: ${wishes} | Rutin: ${j.entry.routineNote}`;
+      }).join('\n');
+
       statsSection = `
-- Gün Sayısı: ${records.length} gün
+- Gün Sayısı (Ölçüm): ${records.length} gün
+- Gün Sayısı (Günlük): ${journalData.length} gün
 - Uyku Ortalaması: ${avgSleep} saat
 - Duygu Durumu Trendi: ${avgMood}/10
-- İş/Aktivite Dağılımı: ${categoriesSummary}
+- İş/Aktivite Dağılımı: ${categoriesSummary || 'Veri yok'}
+- Günlük İçerik Özetleri:
+${journalSummary || 'Dönem için günlük kaydı bulunmuyor.'}
 - Plan-Gerçek Özeti: ${records.length} günlük plandan önemli çıkarımlar yapılacak.
 `.trim();
     }

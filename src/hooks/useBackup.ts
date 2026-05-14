@@ -96,9 +96,17 @@ export function useBackup() {
 
   const getStorageStats = useCallback(() => {
     const longevityURL = localStorage.getItem('longevity_chat_url');
+    const longevityDate = localStorage.getItem('longevity_chat_date');
+    
     const personsStr = localStorage.getItem('msproject_persons');
     const persons = personsStr ? JSON.parse(personsStr) : {};
-    const personsCount = Object.keys(persons).length;
+    const personsArray = Object.values(persons) as any[];
+    const personsCount = personsArray.length;
+    const allPersonsHaveChat = personsCount > 0 && personsArray.every(p => !!p.chatURL);
+
+    const journalStr = localStorage.getItem('journal_entries');
+    const journalEntries = journalStr ? JSON.parse(journalStr) : {};
+    const journalCount = Object.keys(journalEntries).length;
     
     let totalSize = 0;
     for (let i = 0; i < localStorage.length; i++) {
@@ -108,8 +116,12 @@ export function useBackup() {
     
     return {
       hasLongevity: !!longevityURL,
+      longevityDate: longevityDate,
       personsCount,
-      sizeKB: (totalSize / 1024).toFixed(2)
+      allPersonsHaveChat,
+      journalCount,
+      sizeKB: (totalSize / 1024).toFixed(2),
+      lastBackupDate: localStorage.getItem('last_backup_date')
     };
   }, []);
 
