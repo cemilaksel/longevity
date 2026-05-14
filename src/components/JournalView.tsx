@@ -14,7 +14,15 @@ interface JournalViewProps {
 export const JournalView: React.FC<JournalViewProps> = ({ onCopy, copiedId, onNotify }) => {
   const { entries, saveEntry, deleteEntry, getStats } = useJournal();
   
-  const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
+  // Use local date instead of UTC to avoid wrong day at night
+  const getLocalDate = () => {
+    const d = new Date();
+    const offset = d.getTimezoneOffset();
+    const local = new Date(d.getTime() - (offset * 60 * 1000));
+    return local.toISOString().substring(0, 10);
+  };
+
+  const [date, setDate] = useState(getLocalDate());
   const [formData, setFormData] = useState<JournalEntry>({
     happy: ['', '', ''],
     wishes: ['', '', ''],
@@ -170,7 +178,7 @@ export const JournalView: React.FC<JournalViewProps> = ({ onCopy, copiedId, onNo
 
           <button 
             onClick={handleSave}
-            className="w-full py-5 bg-linear-to-r from-purple-600 to-indigo-700 text-white font-black rounded-2xl shadow-xl hover:shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-3"
+            className="w-full py-5 bg-linear-to-r from-purple-600 to-indigo-700 text-white font-black rounded-2xl shadow-xl hover:shadow-2xl transition-all active:scale-[0.98] focus:ring-4 focus:ring-purple-500/20 flex items-center justify-center gap-3 min-h-[56px]"
           >
             <Save size={20} />
             <span>GÜNLÜĞÜ KAYDET</span>

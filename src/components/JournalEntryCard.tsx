@@ -42,29 +42,29 @@ ${entry.routineNote || 'Yazılmadı'}`;
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 text-purple-600">
           <Calendar size={18} />
-          <span className="font-bold text-sm">{formattedDate}</span>
+          <span className="font-bold text-sm">{formattedDate.bugunDetay}</span>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-2">
           <button 
             onClick={handleCopy}
-            className={`p-2 rounded-xl transition-all ${copiedId === cardId ? 'bg-green-500 text-white' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
+            className={`p-3 rounded-xl transition-all shadow-sm flex items-center justify-center min-h-[44px] min-w-[44px] ${copiedId === cardId ? 'bg-green-500 text-white' : 'bg-white border border-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-50'}`}
             title="Kopyala"
           >
-            {copiedId === cardId ? <Check size={16} /> : <Copy size={16} />}
+            {copiedId === cardId ? <Check size={18} /> : <Copy size={18} />}
           </button>
           <button 
             onClick={() => onEdit(date, entry)}
-            className="p-2 text-slate-400 hover:bg-slate-50 hover:text-blue-500 rounded-xl transition-all"
+            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-blue-500 hover:bg-blue-50 hover:border-blue-100 rounded-xl transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
             title="Düzenle"
           >
-            <Edit2 size={16} />
+            <Edit2 size={18} />
           </button>
           <button 
             onClick={() => onDelete(date)}
-            className="p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
+            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 rounded-xl transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
             title="Sil"
           >
-            <Trash2 size={16} />
+            <Trash2 size={18} />
           </button>
         </div>
       </div>
