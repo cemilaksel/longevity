@@ -56,11 +56,11 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ steps, activeTab, 
               onClick={() => onTabChange('settings')}
               className={`whitespace-nowrap px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 flex items-center space-x-2 min-h-[44px] ${
                 activeTab === 'settings'
-                  ? 'bg-slate-100 text-slate-800 border-2 border-slate-800 ring-2 ring-white shadow-lg scale-105'
+                  ? 'bg-gold text-teal-dark border-2 border-slate-900 ring-2 ring-white shadow-[0_0_15px_rgba(255,215,0,0.3)] scale-105'
                   : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/5 hover:text-white'
               }`}
             >
-              <Settings size={18} className={activeTab === 'settings' ? 'text-slate-800' : 'opacity-60'} />
+              <Settings size={18} className={activeTab === 'settings' ? 'text-teal-dark' : 'opacity-60'} />
               <span>Ayarlar</span>
             </button>
           </div>
