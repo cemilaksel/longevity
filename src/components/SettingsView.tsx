@@ -13,6 +13,7 @@ import { useBackup, BackupData } from '../hooks/useBackup';
 import { usePersonStorage } from '../hooks/usePersonStorage';
 import { DataSummary } from './DataSummary';
 import { PersonManager } from './PersonManager';
+import { StorageCard } from './StorageCard';
 
 interface SettingsViewProps {
   onNotify: (message: string, type: 'success' | 'error' | 'info') => void;
@@ -108,6 +109,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onNotify }) => {
         {/* 1. Data Summary Dashboard */}
         <section>
           <DataSummary stats={stats} />
+        </section>
+
+        {/* Storage Status Card */}
+        <section>
+          <StorageCard />
         </section>
 
         {/* 2. Backup & Restore Section */}

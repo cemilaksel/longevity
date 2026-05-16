@@ -7,7 +7,15 @@ export function useJournal() {
   useEffect(() => {
     const saved = localStorage.getItem('journal_entries');
     if (saved) {
-      setEntries(JSON.parse(saved));
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          setEntries(parsed);
+        }
+      } catch (e) {
+        console.error("Failed to parse journal entries", e);
+        setEntries({});
+      }
     }
   }, []);
 

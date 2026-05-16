@@ -39,14 +39,26 @@ export const JournalView: React.FC<JournalViewProps> = ({ onCopy, copiedId, onNo
       return;
     }
 
-    if (entries[date]) {
-      // Overwrite check (handled implicitly here, but could be a modal)
-      onNotify('🔄 Mevcut kayıt güncellendi', 'info');
-    } else {
-      onNotify('✅ Günlük kaydedildi', 'success');
-    }
+    try {
+      if (entries[date]) {
+        onNotify('🔄 Mevcut kayıt güncellendi', 'info');
+      } else {
+        onNotify('✅ Günlük kaydedildi', 'success');
+      }
 
-    saveEntry(date, formData);
+      saveEntry(date, formData);
+      
+      // Auto-scroll to timeline on mobile to see the result
+      setTimeout(() => {
+        const timeline = document.getElementById('timeline-header');
+        if (timeline) {
+          timeline.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500);
+    } catch (error) {
+      onNotify('❌ Kaydedilemedi! Depolama alanı dolmuş olabilir.', 'error');
+      console.error(error);
+    }
   };
 
   const clearForm = () => {
@@ -188,7 +200,7 @@ export const JournalView: React.FC<JournalViewProps> = ({ onCopy, copiedId, onNo
 
       {/* 3. Past Entries Timeline */}
       <div className="space-y-6 pt-4">
-        <h3 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-4">
+        <h3 id="timeline-header" className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-4 scroll-mt-24">
           Zaman Çizelgesi
         </h3>
         
